@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
 
         String imageUrl = null;
-        //String imageUrl = config.getImageUrl("", movie.getPosterPath());
 
         if (isPortrait) {
             imageUrl = config.getImageUrl(config.getPosterSize(), movie.getPosterPath());
@@ -71,7 +71,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         ImageView imageView = isPortrait ? holder.ivPosterImage : holder.ivBackdropImage;
 
 
-        //load image using glide
+              //load image using glide
         Glide.with(holder.itemView)
                 .load(imageUrl)
                 .apply(
@@ -94,6 +94,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         ImageView ivPosterImage;
         ImageView ivBackdropImage;
+        ImageView ivBackdrop;
         TextView tvTitle;
         TextView tvOverview;
 
@@ -103,8 +104,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
             ivPosterImage = (ImageView) itemView.findViewById(R.id.ivPosterImage);
             ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivBackdropimage);
+            ivBackdrop = (ImageView) itemView.findViewById(R.id.ivBackdrop);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
+            tvOverview.setMovementMethod(new ScrollingMovementMethod());
             itemView.setOnClickListener(this);
         }
 
@@ -120,6 +123,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 Intent intent = new Intent(context, MovieDetailsActivity.class);
                 // serialize the movie using parceler, use its short name as a key
                 intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                intent.putExtra(Config.class.getSimpleName(), Parcels.wrap(config));
                 // show the activity
                 context.startActivity(intent);
             }

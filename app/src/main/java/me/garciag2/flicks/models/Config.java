@@ -3,11 +3,15 @@ package me.garciag2.flicks.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
+@Parcel
 public class Config {
-    String imageBaseUrl;
-    String posterSize;
-    String backdropSize;
+    public String imageBaseUrl;
+    public String posterSize;
+    public String backdropSize;
+
+    public Config() {}
 
     public Config(JSONObject object) throws JSONException{
         JSONObject images = object.getJSONObject("images");
